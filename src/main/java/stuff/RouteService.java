@@ -18,6 +18,7 @@ package stuff;
 
 import org.apache.camel.CamelContext;
 import org.apache.camel.Header;
+import org.apache.camel.Route;
 import org.apache.camel.builder.RouteBuilder;
 
 public class RouteService {
@@ -38,5 +39,15 @@ public class RouteService {
             });
         }
 
+    }
+
+    public String listRoutes(CamelContext camelContext) throws Exception {
+        StringBuilder sb = new StringBuilder();
+
+        for (Route route : camelContext.getRoutes()) {
+            sb.append("\n" + route.getId());
+        }
+
+        return sb.toString();
     }
 }

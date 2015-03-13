@@ -32,26 +32,26 @@
       <from uri="servlet:///hello"/>
       <choice>
         <when>
-          <!-- is there a header with the key name? -->
           <header>name</header>
-          <!-- yes so return back a message to the user -->
           <transform>
             <simple>Hello ${header.name} how are you?</simple>
           </transform>
         </when>
         <when>
-          <!-- is there a header with the key name? -->
           <header>add</header>
-          <!-- yes so return back a message to the user -->
-          <bean ref="routeService"/>
+          <bean ref="routeService" method="addRoutes"/>
           <transform>
             <simple>Added ${header.add} new routes</simple>
           </transform>
         </when>
+        <when>
+          <header>list</header>
+          <bean ref="routeService" method="listRoutes"/>
+        </when>
         <otherwise>
           <!-- if no name parameter then output a syntax to the user -->
           <transform>
-            <constant>Add a name parameter to uri, eg ?name=foo or to add new routes use ?add=number where number is number of routes to add</constant>
+            <constant>Use ?add=number to add more routes. Use ?list=true to list all the routes</constant>
           </transform>
         </otherwise>
       </choice>
